@@ -1,0 +1,27 @@
+body {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333333;
+  background-color: #eee;
+}
+
+.pin-buttons {
+  margin-bottom: 20px;
+}
+
+.pin-buttons button {
+  margin-left: 12px;
+}
+
+.pin {
+  clear: both;
+  margin-bottom: 20px;
+  border-left: 3px solid #DDd;
+  padding-left: 12px;
+}
+
+.removePin {
+  margin-left: 5px;
+  padding: 0px 4px;
+}
