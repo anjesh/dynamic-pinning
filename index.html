@@ -1,10 +1,12 @@
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <script type="text/javascript" src="lib/jquery.js"></script>
 <script type="text/javascript" src="lib/underscore.js"></script>
 <script type="text/javascript" src="lib/backbone.js"></script>
+<script type="text/javascript" src="lib/backbone.localstorage.js"></script>
 <script type="text/javascript" src="backbone.exportcsv.js"></script>
 <body>
 <br><br>
@@ -24,17 +26,18 @@
     </div>
     <div class="right-document-wrap">
         <div id="pinList">
-            <b>Pins</b><button class="exportPins">export</button><button class="removeAllPins">clear all</button>
+            <div class="pull-left"><b>Pins</b></div><div class="pull-right pin-buttons"><button class="exportPins">export</button><button class="removeAllPins">clear all</button></div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/template" id="pinTemplate">
-    <div class='pin'><%= pintext %><button class='removePin'>x</button></div>
+    <%= pintext %><button class='removePin'>x</button>
 </script>
 <script type="text/javascript" src="app.js"></script>
 <script>
 var pinCollection = new PinCollection();
+pinCollection.fetch();
 var editorView = new EditorView({
     el: '#textEditor',
     collection: pinCollection

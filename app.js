@@ -1,9 +1,11 @@
 var PinModel = Backbone.Model.extend({});
 var PinCollection = Backbone.Collection.extend({
     model: PinModel,
+    localStorage: new Backbone.LocalStorage("pincollection")
 });
 var PinView = Backbone.View.extend({
     tagName: 'div',
+    className: 'pin',
     events: {
         'click .removePin': 'removePin'
     },
@@ -26,6 +28,7 @@ var PinListView = Backbone.View.extend({
     },
     initialize: function() {
         this.collection.bind('add', this.onPinAdded, this);
+        this.addAll();
     },
     onPinAdded: function(model) {
         this.addOne(model);
@@ -35,6 +38,12 @@ var PinListView = Backbone.View.extend({
             model: model
         });
         $(this.el).append(view.render().el);
+    },
+    addAll: function() {
+        var self = this;
+        this.collection.each(function(model) {
+            self.addOne(model);
+        });
     },
     exportPins: function() {
         this.collection.saveToCSV('pins');
@@ -63,9 +72,9 @@ var EditorView = Backbone.View.extend({
             txt = document.selection.createRange().text;
         }
         if (txt.toString().trim()) {
-            this.collection.add({
-                pintext: txt.toString()
-            });
+            var pin = new PinModel({pintext: txt.toString()});
+            this.collection.add(pin);
+            pin.save();
         }
     },
 });
