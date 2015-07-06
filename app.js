@@ -49,10 +49,10 @@ var PinListView = Backbone.View.extend({
         this.collection.saveToCSV('pins');
     },
     removeAllPins: function() {
-        this.collection.each(function(model) {
-            console.log(model);
+        var self = this;
+        _.each(_.clone(this.collection.models), function(model) {
             model.destroy();
-        });
+        });        
     }
 });
 var EditorView = Backbone.View.extend({
