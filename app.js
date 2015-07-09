@@ -28,10 +28,23 @@ var PinListView = Backbone.View.extend({
     },
     initialize: function() {
         this.collection.bind('add', this.onPinAdded, this);
+        this.collection.bind('remove', this.onPinRemoved, this);
+
         this.addAll();
+    },
+    updateTitle: function() {
+        if(this.collection.length > 0) {
+            $(this.el).find('#title').html('Pins ' + this.collection.length);
+        } else {
+            $(this.el).find('#title').html('Pins');
+        }
+    },
+    onPinRemoved: function(model) {
+        this.updateTitle();
     },
     onPinAdded: function(model) {
         this.addOne(model);
+        this.updateTitle();
     },
     addOne: function(model) {
         var view = new PinView({
@@ -44,6 +57,7 @@ var PinListView = Backbone.View.extend({
         this.collection.each(function(model) {
             self.addOne(model);
         });
+        this.updateTitle();
     },
     exportPins: function() {
         this.collection.saveToCSV('pins');
